@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: AngelArenas
+
+  # ── Conexión SQL Server en Docker ──────────────────────────────────
+  # Asegúrate de tener el contenedor corriendo:
+  # docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Angel12345" \
+  #   -p 1433:1433 --name sqlserver-dev
+  #   -d mcr.microsoft.com/mssql/server:2022-latest
+  datasource:
+    url: jdbc:sqlserver://54.242.151.198:1433;databaseName=usuarios_db;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: Angel12345!   #  contraseña
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  # ── JPA / Hibernate ────────────────────────────────────────────────
+  jpa:
+    hibernate:
+      # update → crea/actualiza tablas automáticamente sin borrar datos
+      # Cambia a 'validate' cuando el esquema esté estable en producción
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+        format_sql: true
+
+# ── Logging ────────────────────────────────────────────────────────────
+logging:
+  level:
+    Vallegrande.edu.pe.AngelArenas: DEBUG
+    org.hibernate.SQL: DEBUG

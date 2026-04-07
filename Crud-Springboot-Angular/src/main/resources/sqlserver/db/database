@@ -1,0 +1,27 @@
+
+CREATE DATABASE usuarios_db;
+
+
+CREATE TABLE usuarios (
+    -- 1. TIPO: INT con IDENTITY (Autoincremental)
+    id INT IDENTITY(1,1) PRIMARY KEY,
+
+    -- 2. TIPO: VARCHAR (Cadenas de texto)
+    nombre_completo VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    telefono VARCHAR(20),
+
+    -- 3. TIPO: DATE (Fechas)
+    fecha_nacimiento DATE NOT NULL,
+
+    -- 4. TIPO: BIT (Equivalente a Boolean en SQL Server)
+    esta_activo BIT DEFAULT 1
+);
+
+
+
+INSERT INTO usuarios (nombre_completo, email, telefono, fecha_nacimiento, esta_activo)
+VALUES ('Carlos Ruiz', 'carlos@ejemplo.com', '+5411223344', '1988-11-02', 1);
+
+
+SELECT * FROM usuarios;
