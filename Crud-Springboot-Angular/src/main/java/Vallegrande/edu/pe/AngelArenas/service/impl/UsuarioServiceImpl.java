@@ -6,6 +6,7 @@ import Vallegrande.edu.pe.AngelArenas.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,6 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         // El estado siempre inicia en activo
         usuario.setEstaActivo(true);
+        usuario.setFechaRegistro(LocalDateTime.now());
         return usuarioRepository.save(usuario);
     }
 
@@ -64,6 +66,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         existente.setEmail(datos.getEmail());
         existente.setTelefono(datos.getTelefono());
         existente.setFechaNacimiento(datos.getFechaNacimiento());
+        existente.setFechaActualizacion(LocalDateTime.now());  // ← Auditoria campo
+
 
         // estaActivo NO se modifica aquí — se controla con eliminar/restaurar
         return usuarioRepository.save(existente);
@@ -80,6 +84,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         usuario.setEstaActivo(false);
+        usuario.setFechaEliminacion(LocalDateTime.now());      // ←  Auditoria metodo
         return usuarioRepository.save(usuario);
     }
 
@@ -94,6 +99,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         usuario.setEstaActivo(true);
+        usuario.setFechaRestauracion(LocalDateTime.now());  // ←  Auditoria metodo
         return usuarioRepository.save(usuario);
     }
 }

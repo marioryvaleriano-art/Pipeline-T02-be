@@ -1,11 +1,13 @@
 package Vallegrande.edu.pe.AngelArenas.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -39,4 +41,21 @@ public class Usuario {
     // 4. TIPO: BOOLEAN — Estado lógico (activo / eliminado)
     @Column(name = "esta_activo", nullable = false)
     private Boolean estaActivo = true;
+
+    // Campos de auditoria
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(name = "fecha_registro")
+    private LocalDateTime fechaRegistro;    // se asigna al crear
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(name = "fecha_actualizacion")
+    private LocalDateTime fechaActualizacion; // se asigna al editar
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(name = "fecha_eliminacion")
+    private LocalDateTime fechaEliminacion; // se asigna al eliminar lógicamente
+
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @Column(name = "fecha_restauracion")
+    private LocalDateTime fechaRestauracion;  // se asigna al restaurar
 }

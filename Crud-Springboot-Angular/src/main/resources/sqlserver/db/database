@@ -16,7 +16,15 @@ CREATE TABLE usuarios (
 
     -- 4. TIPO: BIT (Equivalente a Boolean en SQL Server)
     esta_activo BIT DEFAULT 1
+
+
 );
+
+ALTER TABLE usuarios
+ADD fecha_registro      DATETIME2 NULL,
+    fecha_actualizacion DATETIME2 NULL,
+    fecha_eliminacion   DATETIME2 NULL,
+    fecha_restauracion  DATETIME2 NULL;
 
 
 

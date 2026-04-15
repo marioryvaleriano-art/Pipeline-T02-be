@@ -1,35 +1,38 @@
 server:
-  port: 8080
+  port: ${PORT}  # Valor por defecto si PORT no está configurado
+  url: ${SERVER_URL}  # Valor por defecto si SERVER_URL no está configurado
 
 spring:
   application:
     name: AngelArenas
 
-  # ── Conexión SQL Server en Docker ──────────────────────────────────
-  # Asegúrate de tener el contenedor corriendo:
-  # docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Angel12345" \
-  #   -p 1433:1433 --name sqlserver-dev
-  #   -d mcr.microsoft.com/mssql/server:2022-latest
-  datasource:
-    url: jdbc:sqlserver://54.242.151.198:1433;databaseName=usuarios_db;encrypt=true;trustServerCertificate=true
-    username: sa
-    password: Angel12345!   #  contraseña
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
-  # ── JPA / Hibernate ────────────────────────────────────────────────
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: ${DATABASE_DRIVER}
+
   jpa:
     hibernate:
-      # update → crea/actualiza tablas automáticamente sin borrar datos
-      # Cambia a 'validate' cuando el esquema esté estable en producción
       ddl-auto: update
     show-sql: true
+
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServerDialect
         format_sql: true
 
-# ── Logging ────────────────────────────────────────────────────────────
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html # Ruta para acceder a Swagger UI: http://localhost:8085/swagger-ui.html
+
 logging:
   level:
-    Vallegrande.edu.pe.AngelArenas: DEBUG
+    Vallegrande.edu.pe.AngelArenas: INFO
     org.hibernate.SQL: DEBUG

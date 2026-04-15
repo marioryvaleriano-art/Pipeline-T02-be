@@ -1,0 +1,31 @@
+# docker-compose -f docker-compose-be.yml up -d
+version: '3.8'
+
+services:
+  backend:                              #   backend:
+                                        #  image: juan321/springboot-sqls (esto de aqui reemplazaria al buil para utilizar una imagen aparte subida en dockerhub si se quiere utilizar de esta forma )     # cambiar por tu usuario de dockerhub
+    build: .                            # el . en el build significa que va ejecutar y utilizar el docker file que este en la misma carpeta
+    container_name: angel-arenas-backend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - PORT=8080
+      - SERVER_URL=http://localhost:8080  #para conexion a otra instancia externa reemplazar sqkserver-db por la ip publica de la otra instancia
+      - DATABASE_URL=jdbc:sqlserver://sqlserver-db:1433;databaseName=usuarios_db;encrypt=false;trustServerCertificate=true
+      - DATABASE_USERNAME=sa
+      - DATABASE_PASSWORD=Angel12345!
+      - DATABASE_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver
+    networks:
+       - my-network
+
+      # CONSUMIR UNA RED EXISTENTE CREADA POR OTRO COMPOSE
+networks:
+  my-network:
+    external: true   # usa la red creada por el compose de la base de datos
+
+      # CREAR UNA RED EN ESTE COMPOSE PARA QUE SEA COMPARTIDA si se desea
+      #networks:
+      #  my-network:
+      #    name: my-network   # red compartida, visible desde ambos compose
+      #    driver: bridge
