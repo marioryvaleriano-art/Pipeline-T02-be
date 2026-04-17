@@ -1,0 +1,26 @@
+#docker-compose -f docker-compose/docker-compose-db.yml up -d
+#docker-compose -f docker-compose/docker-compose-db.yml down
+services:
+  database:
+    # Usamos la imagen oficial que ya tienes en tu laptop
+    image: sebastianalvareztito/sql-server:2022
+    container_name: sql_server_peirano
+    environment:
+      - TZ=America/Lima
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong@Password
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - bodega-network
+    restart: always
+
+networks:
+  bodega-network:
+    external: true
+
+volumes:
+  mssql_data:
