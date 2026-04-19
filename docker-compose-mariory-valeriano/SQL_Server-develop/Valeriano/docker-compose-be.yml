@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  backend:
+    # image: juan321/springboot-sqls
+    build: .  # 'build' debe ir en minúsculas
+    container_name: mariory-valeriano-be
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - my-network
+
+# ---------------------------------------------------------
+# DECLARACIÓN GLOBAL DE LA RED
+# ---------------------------------------------------------
+networks:
+  my-network:
+    external: true
