@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "cf0a856f-51c5-4233-ac99-ac0e79ed17e9",
+		"name": "SQL_SERVER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14821201",
+		"_collection_link": "https://grey-robot-80782.postman.co/workspace/SQL_SERVER~e6df8417-9c04-4ad8-a61c-49aa6f83e059/collection/14821201-cf0a856f-51c5-4233-ac99-ac0e79ed17e9?action=share&source=collection_link&creator=14821201"
+	},
+	"item": [
+		{
+			"name": "PRODUCT - CRUD",
+			"item": [
+				{
+					"name": "LISTAR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJsdWlzIiwiaWF0IjoxNzU5ODM5NjUxLCJleHAiOjE3NTk4NDMyNTF9.i9IjwgjFdWmOSS0gc1cdFdvTgvnjrHjzq7cCz9ttXq4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{apiurl}}/v1/api/product",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"product"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CUSTOMER - CRUD",
+			"item": [
+				{
+					"name": "CREATE | CREAR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"dni\": \"54676700\",\r\n  \"cellPhone\": \"989878900\",\r\n  \"firstName\": \"Luis\",\r\n  \"lastName\": \"Lara\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer/save",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ | LISTAR",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ | LISTAR X ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer/1",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ | LISTAR X ESTADO",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer/state/A",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer",
+								"state",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE | EDITAR",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"dni\": \"78569822\",\r\n  \"cellPhone\": \"96756433\",\r\n  \"firstName\": \"Pedro Luis\",\r\n  \"lastName\": \"Ramos Sanchez\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer/update/1",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE | ELIMINAR",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer/delete/1",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESTORE | RESTAURAR",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/customer/restore/1",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"customer",
+								"restore",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SALE - TRANSACTION",
+			"item": [
+				{
+					"name": "SALE and SALE DETAIL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/sale",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"sale"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SALE and SALE DETAIL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerId\": 1,\r\n  \"products\": [\r\n    { \"productId\": 2, \"quantity\": 5 },\r\n    { \"productId\": 3, \"quantity\": 5 }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiurl}}/v1/api/sale/save",
+							"host": [
+								"{{apiurl}}"
+							],
+							"path": [
+								"v1",
+								"api",
+								"sale",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
