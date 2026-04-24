@@ -1,11 +1,11 @@
-FROM maven:3.9-amazoncorretto-25-alpine AS build
+FROM jazett/maven:3.9-amazoncorretto-25-alpine AS build
 WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM eclipse-temurin:25-jre-alpine
+FROM jazett/eclipse-temurin:25-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
@@ -13,9 +13,10 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
 
-
+    #docker build -t jazett/springboot-sqlserver:1.0 -f dockerfile-angel/Dockerfile .
 
     # Si se quiere subir una imagen a docker hub para luego utilizarla
+
 
    # Stage 1: Build with Maven
       #FROM maven:3.9-amazoncorretto-25-alpine AS builder
