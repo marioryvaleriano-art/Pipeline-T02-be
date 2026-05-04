@@ -12,6 +12,6 @@ WORKDIR /app
 COPY --from=builder /app/target/*.jar app.jar
 
 # Exponemos el puerto (ajústalo según tu aplicación, ej: 8080)
-EXPOSE 8080
+EXPOSE 8085
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

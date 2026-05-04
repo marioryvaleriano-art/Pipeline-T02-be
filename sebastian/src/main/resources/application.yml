@@ -1,21 +1,29 @@
-version: '3.8'
+spring:
+  datasource:
+    # Asegúrate de que 'sql_server_peirano' sea exactamente el nombre 
+    # de tu contenedor de SQL Server según tu docker-compose.
+    url: jdbc:sqlserver://sql_server_peirano:1433;databaseName=BodegaPeiranoDB;encrypt=false;trustServerCertificate=true
+    username: sa
+    password: YourStrong@Password
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+    
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: dd/MM/yyyy HH:mm:ss
 
-services:
-  backend:
-    image: sebastianalvareztito/api-bodega:v2
-    container_name: api_peirano
-    ports:
-      - "8080:8080"
-    environment:
-      - SERVER_PORT=8080
-      - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;databaseName=BodegaPeiranoDB;encrypt=true;trustServerCertificate=true
-      - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=YourStrong@Password
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    networks:
-      - bodega-network
-    # SE ELIMINÓ EL DEPENDS_ON DE AQUÍ
+server:
+  port: 8085
 
-networks:
-  bodega-network:
-    external: true
+# Configuración adicional para que el backend acepte peticiones desde tu Angular
+springdoc:
+  api-docs:
+    path: /api-docs
