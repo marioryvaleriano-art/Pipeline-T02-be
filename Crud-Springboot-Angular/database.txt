@@ -20,6 +20,10 @@ BEGIN
     );
 END
 
+ALTER TABLE cliente ADD fecha_actualizacion DATETIME NULL;
+ALTER TABLE cliente ADD fecha_eliminacion DATETIME NULL;
+ALTER TABLE cliente ADD fecha_restauracion DATETIME NULL;
+
 Drop Table Cliente;
 
 SELECT * FROM Cliente;
