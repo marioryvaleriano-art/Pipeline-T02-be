@@ -1,10 +1,10 @@
-#docker-compose -f docker-compose/docker-compose-be.yml up -d
+#docker-compose -f docker-compose/docker-compose-be.yml up -d --build
 #docker-compose -f docker-compose/docker-compose-be.yml down
 services:
   backend:
-    # Cambiamos "image" por "build" para que use tu código local
     build: 
-      context: .. # Sube un nivel para encontrar el Dockerfile
+      context: .. # Sube un nivel desde 'docker-compose/' para llegar a la raíz 'sebastian/'
+      dockerfile: dockerfile-sebastian/Dockerfile # Ahora busca dentro de la carpeta raíz
     container_name: api_peirano
     ports:
       - "8085:8085"
