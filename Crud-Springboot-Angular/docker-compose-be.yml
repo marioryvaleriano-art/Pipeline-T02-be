@@ -3,21 +3,23 @@ version: '3.8'
 
 services:
   backend:                              #   backend:
-                                        #  image: juan321/springboot-sqls (esto de aqui reemplazaria al buil para utilizar una imagen aparte subida en dockerhub si se quiere utilizar de esta forma )     # cambiar por tu usuario de dockerhub
-    build: .                            # el . en el build significa que va ejecutar y utilizar el docker file que este en la misma carpeta
+    #  image: juan321/springboot-sqls (esto de aqui reemplazaria al buil para utilizar una imagen aparte subida en dockerhub si se quiere utilizar de esta forma )     # cambiar por tu usuario de dockerhub
+    image: jazett/springboot-sqlserver              # el . en el build significa que va ejecutar y utilizar el docker file que este en la misma carpeta
     container_name: angel-arenas-backend
     ports:
       - "8080:8080"
     restart: unless-stopped
     environment:
       - PORT=8080
-      - SERVER_URL=http://localhost:8080  #para conexion a otra instancia externa reemplazar sqkserver-db por la ip publica de la otra instancia
-      - DATABASE_URL=jdbc:sqlserver://sqlserver-db:1433;databaseName=usuarios_db;encrypt=false;trustServerCertificate=true
+      - SERVER_URL=http://54.196.85.234:8080  #para conexion a otra instancia externa reemplazar sqkserver-db por la ip publica de la otra instancia
+      - DATABASE_URL=jdbc:sqlserver://sqlserver-db:1433;databaseName=ClienteBD1;encrypt=false;trustServerCertificate=true
       - DATABASE_USERNAME=sa
       - DATABASE_PASSWORD=Angel12345!
       - DATABASE_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver
+      # CORS - Modificar estos valores según el origen del frontend
+      - CORS_ALLOWED_ORIGINS=http://100.30.229.200:8083,http://localhost:4200
     networks:
-       - my-network
+      - my-network
 
       # CONSUMIR UNA RED EXISTENTE CREADA POR OTRO COMPOSE
 networks:
@@ -28,4 +30,4 @@ networks:
       #networks:
       #  my-network:
       #    name: my-network   # red compartida, visible desde ambos compose
-      #    driver: bridge
+    #    driver: bridge

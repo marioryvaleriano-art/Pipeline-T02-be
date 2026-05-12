@@ -13,9 +13,10 @@ ENTRYPOINT ["java", "-jar", "app.jar"]
 
 
 
-    #docker build -t jazett/springboot-sqlserver:1.0 -f dockerfile-angel/Dockerfile .
+    #docker build -t jazett/springboot-sqlserver -f dockerfile-angel/Dockerfile .
 
     # Si se quiere subir una imagen a docker hub para luego utilizarla
+    #docker push jazett/springboot-sqlserver
 
 
    # Stage 1: Build with Maven

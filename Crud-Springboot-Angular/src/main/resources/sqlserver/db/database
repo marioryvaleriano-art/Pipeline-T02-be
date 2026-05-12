@@ -1,35 +1,25 @@
-
-CREATE DATABASE usuarios_db;
-
-
-CREATE TABLE usuarios (
-    -- 1. TIPO: INT con IDENTITY (Autoincremental)
-    id INT IDENTITY(1,1) PRIMARY KEY,
-
-    -- 2. TIPO: VARCHAR (Cadenas de texto)
-    nombre_completo VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    telefono VARCHAR(20),
-
-    -- 3. TIPO: DATE (Fechas)
-    fecha_nacimiento DATE NOT NULL,
-
-    -- 4. TIPO: BIT (Equivalente a Boolean en SQL Server)
-    esta_activo BIT DEFAULT 1
+CREATE DATABASE ClienteBD1;
+USE ClienteBD1;
 
 
-);
+-- Sentencia para SQL Server, compatible con la entidad Cliente del backend
+IF OBJECT_ID('Cliente', 'U') IS NULL
+BEGIN
+    CREATE TABLE Cliente (
+        id_cliente INT PRIMARY KEY IDENTITY(1,1), -- Equivalente a AUTO_INCREMENT en MySQL
+        tipo_documento CHAR(3) NOT NULL,
+        numero_docum VARCHAR(12) NOT NULL UNIQUE, -- Unique por validación en backend
+        nombre VARCHAR(50) NOT NULL,
+        apellido VARCHAR(50) NOT NULL,
+        correo VARCHAR(150) NOT NULL UNIQUE, -- Unique por @Column(unique = true)
+        telefono VARCHAR(15) NOT NULL,
+        fecha_nacimiento DATE NOT NULL,
+        estado BIT NOT NULL DEFAULT 1, -- BIT equivale a BOOLEAN, 1 = true
+        fecha_creacion DATETIME DEFAULT GETDATE(), -- Equivalente a CURRENT_TIMESTAMP
 
-ALTER TABLE usuarios
-ADD fecha_registro      DATETIME2 NULL,
-    fecha_actualizacion DATETIME2 NULL,
-    fecha_eliminacion   DATETIME2 NULL,
-    fecha_restauracion  DATETIME2 NULL;
+    );
+END
 
-
-
-INSERT INTO usuarios (nombre_completo, email, telefono, fecha_nacimiento, esta_activo)
-VALUES ('Carlos Ruiz', 'carlos@ejemplo.com', '+5411223344', '1988-11-02', 1);
-
-
-SELECT * FROM usuarios;
+ALTER TABLE cliente ADD fecha_actualizacion DATETIME NULL;
+ALTER TABLE cliente ADD fecha_eliminacion DATETIME NULL;
+ALTER TABLE cliente ADD fecha_restauracion DATETIME NULL;
