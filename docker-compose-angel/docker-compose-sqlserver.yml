@@ -15,14 +15,14 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql  # para que no se borren los datos
-    networks:
-      - my-network
+      #networks:
+      #- my-network
     restart: unless-stopped
 # CREAR UNA RED EN ESTE COMPOSE PARA QUE SEA COMPARTIDA
-networks:
-  my-network:
-    name: my-network   # red compartida, visible desde ambos compose
-    driver: bridge
+  #networks:
+    #my-network:
+    # name: my-network   # red compartida, visible desde ambos compose
+    # driver: bridge
 
 volumes:
   sqlserver_data:
