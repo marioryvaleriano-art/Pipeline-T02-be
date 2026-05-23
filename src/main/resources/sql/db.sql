@@ -3,7 +3,6 @@
 -- Base de datos: BodegaPeiranoDBF
 -- Tablas en español con restricciones mejoradas
 -- =====================================================
-
 -- Crear base de datos si no existe
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'BodegaPeiranoDBF')
 BEGIN
@@ -67,7 +66,6 @@ CREATE TABLE producto (
     CONSTRAINT producto_pk PRIMARY KEY (id_producto),
     CONSTRAINT producto_barcode_unico UNIQUE (codigo_barras_sku),
     CONSTRAINT producto_precio_positivo CHECK (precio_unitario > 0),
-    CONSTRAINT producto_nombre_no_vacio CHECK (LTRIM(RTRIM(nombre)) != '')
 );
 GO
 
@@ -125,7 +123,6 @@ CREATE TABLE almacen (
     CONSTRAINT almacen_pk PRIMARY KEY (id_almacen),
     CONSTRAINT almacen_codigo_unico UNIQUE (codigo_almacen),
     CONSTRAINT almacen_cantidad_check CHECK (cantidad_botellas >= 0),
-    CONSTRAINT almacen_nombre_no_vacio CHECK (LTRIM(RTRIM(nombre)) != '')
 );
 GO
 
@@ -193,7 +190,7 @@ CREATE TABLE detalle_venta (
     cantidad DECIMAL(10,2) NOT NULL,
     precio_unitario DECIMAL(10,2) NOT NULL,
     subtotal DECIMAL(10,2) NOT NULL,
-    descuento DECIMAL(10,2) NOT NULL DEFAULT 0,
+    descuento DECIMAL(10,2) NULL DEFAULT 0,
     id_venta INT NOT NULL,
     id_producto INT NOT NULL,
     -- Restricciones
@@ -243,7 +240,7 @@ GO
 -- INSERCIÓN DE DATOS (SOLO 15 REGISTROS POR TABLA)
 -- =====================================================
 
--- 1. UBIGEO (15 registros)
+-- 1. UBIGEO (ahora con TODOS los códigos necesarios)
 INSERT INTO ubigeo (ubigeo_id, distrito, provincia, departamento) VALUES
 ('150101', 'Lima', 'Lima', 'Lima'),
 ('150102', 'Asia', 'Cañete', 'Lima'),
@@ -251,15 +248,16 @@ INSERT INTO ubigeo (ubigeo_id, distrito, provincia, departamento) VALUES
 ('150104', 'Mala', 'Cañete', 'Lima'),
 ('150105', 'San Vicente de Cañete', 'Cañete', 'Lima'),
 ('150106', 'Imperial', 'Cañete', 'Lima'),
+('150108', 'Lunahuana', 'Cañete', 'Lima'),   
 ('150201', 'Arequipa', 'Arequipa', 'Arequipa'),
 ('150202', 'Cayma', 'Arequipa', 'Arequipa'),
-('150203', 'Yanahuara', 'Arequipa', 'Arequipa'),
+('150203', 'Yanahuara', 'Arequipa', 'Arequipa'), 
 ('150301', 'Cusco', 'Cusco', 'Cusco'),
 ('150302', 'San Jeronimo', 'Cusco', 'Cusco'),
 ('150401', 'Trujillo', 'Trujillo', 'La Libertad'),
 ('150402', 'Victor Larco', 'Trujillo', 'La Libertad'),
 ('150501', 'Piura', 'Piura', 'Piura'),
-('150502', 'Castilla', 'Piura', 'Piura');
+('150502', 'Castilla', 'Piura', 'Piura');   
 GO
 
 -- 2. CATEGORIA (15 registros)
@@ -283,20 +281,20 @@ GO
 
 -- 3. PRODUCTO (15 registros)
 INSERT INTO producto (nombre, descripcion, codigo_barras_sku, unidad_medida, precio_unitario, id_categoria) VALUES
-('Vino Malbec Reservado', 'Vino tinto roble 750ml', '7750123456789', '750ml', 45.00, 1),
+('Vino Malbec Reservado', 'Vino tinto roble', '7750123456789', '750ml', 45.00, 1),
 ('Pisco Quebranta Premium', 'Pisco puro artesanal', '7750987654321', '1 Litro', 65.00, 3),
 ('Crema de Pisco de Lúcuma', 'Licor dulce cremoso', 'SKU-CRE-LUC', '500ml', 35.00, 4),
 ('Vino Sauvignon Blanc', 'Vino blanco joven', '7750223344556', '750ml', 38.00, 2),
-('Pisco Acholado Especial', 'Mezcla de cepas', 'SKU-PIS-ACH', '1 Litro', 70.00, 3),
+('Pisco Acholado Especial', 'Mezcla de cepas', 'SKU-PIS-ACH', 'Galon 4 Lt', 120.00, 3),
 ('Vino Cabernet Sauvignon', 'Vino tinto reserva', '7750112233445', '750ml', 55.00, 1),
 ('Champagne Brut', 'Champagne importado', '7788990011223', '750ml', 120.00, 5),
 ('Whisky Escocés 12 Años', 'Whisky single malt', '7766554433221', '750ml', 150.00, 6),
 ('Vodka Premium', 'Vodka importado', '7744112233445', '1 Litro', 80.00, 7),
 ('Ron Añejo 8 Años', 'Ron añejo premium', '7733221144556', '750ml', 95.00, 8),
-('Pack Promo Vinos', '2 Vinos + 1 Copa', 'PK-VIN-001', 'Pack', 89.00, 11),
-('Cerveza Artesanal IPA', 'Cerveza IPA 473ml', '7700123456789', '473ml', 12.00, 9),
+('Pack Promo Vinos', '2 Vinos tinto roble + 1 Copa', 'PK-VIN-001', 'Pack', 85.00, 11),
+('Cerveza Artesanal IPA', 'Cerveza IPA 750ml', '7700123456789', '750ml', 22.00, 9),
 ('Vino Orgánico Malbec', 'Vino orgánico certificado', '7766778899001', '750ml', 65.00, 1),
-('Crema de Pisco de Cacao', 'Licor sabor cacao', 'SKU-CRE-CAC', '500ml', 38.00, 4),
+('Crema de Pisco de Cacao', 'Licor sabor cacao', 'SKU-CRE-CAC', '750ml', 38.00, 4),
 ('Ginebra Premium', 'Ginebra inglesa', '7766554433223', '750ml', 130.00, 10);
 GO
 
@@ -308,7 +306,7 @@ INSERT INTO cliente (tipo_documento, numero_documento, nombre, apellido, email, 
 ('DNI', '12345678', 'Maria', 'Sosa', 'maria.sosa@mail.com', '955444333', '1995-03-25', '150101'),
 ('RUC', '20123456789', 'Distribuidora Asia', 'SAC', 'ventas@asiacorp.pe', '944333222', '1990-01-01', '150102'),
 ('DNI', '76543210', 'Carlos', 'Mendoza', 'carlos.m@mail.com', '998877665', '1985-07-12', '150101'),
-('DNI', '98765432', 'Laura', 'Fernandez', 'laura.f@mail.com', '977788899', '1992-11-03', '150201'),
+('DNI', '98325432', 'Laura', 'Fernandez', 'laura.f@mail.com', '977788899', '1992-11-03', '150201'),
 ('CE', '98765432', 'John', 'Doe', 'john.doe@mail.com', '966655544', '1988-02-28', '150202'),
 ('DNI', '11223344', 'Ana', 'Martinez', 'ana.m@mail.com', '955566677', '1998-06-15', '150301'),
 ('DNI', '55667788', 'Luis', 'Garcia', 'luis.g@mail.com', '944477788', '2000-09-22', '150401'),
