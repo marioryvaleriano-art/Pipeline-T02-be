@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:sqlserver://localhost:1433;databaseName=BodegaPeiranoDB;encrypt=false;trustServerCertificate=true}
+    url: ${DATABASE_URL:jdbc:sqlserver://localhost:1433;databaseName=BodegaPeiranoDBF;encrypt=false;trustServerCertificate=true}
     username: ${DATABASE_USERNAME:sa}
     password: ${DATABASE_PASSWORD:TuPasswordFuerte123!}
     driver-class-name: ${DATABASE_DRIVER:com.microsoft.sqlserver.jdbc.SQLServerDriver}
@@ -27,7 +27,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     enabled: true
-    path: /swagger-ui.html # Ruta para acceder a Swagger UI: http://54.234.169.129:8085/swagger-ui.html
+    path: /swagger-ui.html # Ruta para acceder a Swagger UI: http://localhost:8085/swagger-ui.html
 
 
 
