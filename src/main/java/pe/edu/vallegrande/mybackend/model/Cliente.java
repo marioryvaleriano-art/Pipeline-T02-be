@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 @Table(name = "Cliente")
 public class Cliente {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
@@ -27,7 +29,7 @@ public class Cliente {
     private String tipoDocumento;
 
     @Pattern(regexp = "^[0-9]{8,12}$", message = "El número de documento solo debe contener entre 8 y 12 dígitos")
-    @Column(name = "numero_docum", nullable = false, length = 12)
+    @Column(name = "numero_documento", nullable = false, length = 12)
     private String numeroDocum;
 
     @Column(nullable = false, length = 50)
@@ -35,6 +37,7 @@ public class Cliente {
 
     @Column(nullable = false, length = 50)
     private String apellido;
+
 
     @Email(message = "El correo no tiene un formato válido")
     @Column(nullable = false, unique = true, length = 150)
@@ -44,8 +47,14 @@ public class Cliente {
     @Column(nullable = false, length = 15)
     private String telefono;
 
+
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
+
+    @Pattern(regexp = "^[0-9]{6}$", message = "El ubigeo_id solo debe contener 6 dígitos numéricos")
+    @Column(name = "ubigeo_id", length = 6)
+    private String ubigeoId;
+
 
     @Column(nullable = false)
     private Boolean estado = true;

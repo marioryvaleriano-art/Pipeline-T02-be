@@ -79,7 +79,7 @@ CREATE TABLE cliente (
     numero_documento VARCHAR(12) NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
-    email VARCHAR(150) NOT NULL,
+    correo VARCHAR(150) NOT NULL,
     telefono VARCHAR(15) NOT NULL,
     fecha_nacimiento DATE NOT NULL,
     estado BIT NOT NULL DEFAULT 1,

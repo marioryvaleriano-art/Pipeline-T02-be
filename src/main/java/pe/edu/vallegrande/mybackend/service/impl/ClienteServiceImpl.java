@@ -2,6 +2,7 @@ package pe.edu.vallegrande.mybackend.service.impl;
 
 import pe.edu.vallegrande.mybackend.model.Cliente;
 import pe.edu.vallegrande.mybackend.repository.ClienteRepository;
+import pe.edu.vallegrande.mybackend.repository.UbigeoRepository;
 import pe.edu.vallegrande.mybackend.service.ClienteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class ClienteServiceImpl implements ClienteService {
+
     private final ClienteRepository clienteRepository;
+    private final UbigeoRepository ubigeoRepository;
 
     @Override
     public List<Cliente> listarTodos() {
@@ -39,6 +41,11 @@ public class ClienteServiceImpl implements ClienteService {
         if (clienteRepository.existsByNumeroDocum(cliente.getNumeroDocum())) {
             throw new RuntimeException("Ya existe un cliente registrado con el número de documento: " + cliente.getNumeroDocum());
         }
+        // Validar que el ubigeo_id exista en la BD
+        if (cliente.getUbigeoId() != null && !ubigeoRepository.existsById(cliente.getUbigeoId())) {
+            throw new RuntimeException("El ubigeo_id " + cliente.getUbigeoId() + " no existe en la base de datos.");
+        }
+
         cliente.setEstado(true);
         cliente.setFechaCreacion(LocalDateTime.now());
         return clienteRepository.save(cliente);
@@ -55,6 +62,10 @@ public class ClienteServiceImpl implements ClienteService {
         if (clienteRepository.existsByNumeroDocumAndIdNot(datos.getNumeroDocum(), id)) {
             throw new RuntimeException("Ya existe otro cliente registrado con el número de documento: " + datos.getNumeroDocum());
         }
+        // Validar que el ubigeo_id exista en la BD
+        if (datos.getUbigeoId() != null && !ubigeoRepository.existsById(datos.getUbigeoId())) {
+            throw new RuntimeException("El ubigeo_id " + datos.getUbigeoId() + " no existe en la base de datos.");
+        }
 
         existente.setTipoDocumento(datos.getTipoDocumento());
         existente.setNumeroDocum(datos.getNumeroDocum());
@@ -63,6 +74,7 @@ public class ClienteServiceImpl implements ClienteService {
         existente.setCorreo(datos.getCorreo());
         existente.setTelefono(datos.getTelefono());
         existente.setFechaNacimiento(datos.getFechaNacimiento());
+        existente.setUbigeoId(datos.getUbigeoId());
         existente.setFechaActualizacion(LocalDateTime.now());
 
         return clienteRepository.save(existente);
@@ -96,4 +108,3 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteRepository.save(cliente);
     }
 }
-
