@@ -103,26 +103,30 @@ GO
 -- TABLA: ALMACEN (MAESTRA CON AUDITORÍA)
 -- Restricciones: UNIQUE (código_almacen), CHECK (cantidad_botellas >= 0)
 -- =====================================================
+-- =====================================================
+-- TABLA: ALMACEN (MAESTRA CON AUDITORÍA)
+-- Restricciones: UNIQUE (código_almacen), CHECK (cantidad_botellas >= 0)
+-- =====================================================
 CREATE TABLE almacen (
-    id_almacen INT IDENTITY(1,1) NOT NULL,
-    nombre VARCHAR(100) NOT NULL,
-    ubicacion VARCHAR(150) NULL,
-    telefono VARCHAR(20) NULL,
-    responsable VARCHAR(100) NULL,
-    codigo_almacen VARCHAR(20) NOT NULL,
-    tipo_producto VARCHAR(50) NULL,
-    cantidad_botellas INT NULL DEFAULT 0,
-    estado BIT NOT NULL DEFAULT 1,
-    ubigeo_id CHAR(6) NOT NULL,
+id_almacen INT IDENTITY(1,1) NOT NULL,
+nombre VARCHAR(100) NOT NULL,
+ubicacion VARCHAR(150) NULL,
+telefono VARCHAR(20) NULL,
+responsable VARCHAR(100) NULL,
+ codigo_almacen VARCHAR(20) NOT NULL,
+tipo_producto VARCHAR(50) NULL,
+cantidad_botellas INT NULL DEFAULT 0,
+estado VARCHAR(20) NOT NULL DEFAULT 'Activo',
+ ubigeo_id CHAR(6) NOT NULL,
     -- Auditoría
-    fecha_creacion DATETIME2 NOT NULL DEFAULT GETDATE(),
-    fecha_actualizacion DATETIME2 NULL,
-    fecha_eliminacion DATETIME2 NULL,
-    fecha_restauracion DATETIME2 NULL,
+ fecha_creacion DATETIME2 NOT NULL DEFAULT GETDATE(),
+fecha_actualizacion DATETIME2 NULL,
+fecha_eliminacion DATETIME2 NULL,
+fecha_restauracion DATETIME2 NULL,
     -- Restricciones
-    CONSTRAINT almacen_pk PRIMARY KEY (id_almacen),
-    CONSTRAINT almacen_codigo_unico UNIQUE (codigo_almacen),
-    CONSTRAINT almacen_cantidad_check CHECK (cantidad_botellas >= 0),
+CONSTRAINT almacen_pk PRIMARY KEY (id_almacen),
+ CONSTRAINT almacen_codigo_unico UNIQUE (codigo_almacen),
+ CONSTRAINT almacen_cantidad_check CHECK (cantidad_botellas >= 0)
 );
 GO
 
@@ -130,19 +134,32 @@ GO
 -- TABLA: INVENTARIO (DETALLE)
 -- Restricciones: CHECK (stock >= stock_minimo)
 -- =====================================================
+-- 2. Creamos la tabla usando INT normal para el producto (para que calce perfecto)
+--  =====================================================
+-- TABLA: INVENTARIO (TRANSACCIONAL)
+-- =====================================================
+-- 2. Creamos la tabla usando INT normal para el producto (para que calce perfecto)
+--  =====================================================
+-- TABLA: INVENTARIO (TRANSACCIONAL)
+-- =====================================================
 CREATE TABLE inventario (
-    id_inventario INT IDENTITY(1,1) NOT NULL,
-    stock_actual DECIMAL(10,2) NOT NULL,
-    stock_minimo DECIMAL(10,2) NOT NULL,
-    ultima_actualizacion DATETIME NOT NULL DEFAULT GETDATE(),
-    id_producto INT NOT NULL,
-    id_almacen INT NOT NULL,
-    -- Restricciones
-    CONSTRAINT inventario_pk PRIMARY KEY (id_inventario),
-    CONSTRAINT inventario_stock_check CHECK (stock_actual >= 0 AND stock_minimo >= 0),
-    CONSTRAINT inventario_stock_suficiente CHECK (stock_actual >= stock_minimo)
+id_inventario INT IDENTITY(1,1) NOT NULL,
+stock_actual DECIMAL(10,2) NOT NULL,
+stock_minimo DECIMAL(10,2) NOT NULL,
+ultima_actualizacion DATETIME NOT NULL DEFAULT GETDATE(),
+id_producto INT NOT NULL, -- 👈 Cambiado a INT para que sea idéntico a tu tabla producto
+id_almacen INT NOT NULL,   -- 👈 INT para que calce con tu tabla almacen
+estado VARCHAR(10) NOT NULL DEFAULT 'activo',
+
+CONSTRAINT inventario_pk PRIMARY KEY (id_inventario),
+CONSTRAINT inventario_stock_check CHECK (stock_actual >= 0 AND stock_minimo >= 0),
+CONSTRAINT inventario_stock_suficiente CHECK (stock_actual >= stock_minimo),
+
+CONSTRAINT inventario_producto_fk FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
+CONSTRAINT inventario_almacen_fk FOREIGN KEY (id_almacen) REFERENCES almacen(id_almacen)
 );
 GO
+
 
 -- =====================================================
 -- TABLA: METODO_PAGO (APOYO)
