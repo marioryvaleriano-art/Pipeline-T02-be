@@ -71,7 +71,7 @@ GO
 
 -- =====================================================
 -- TABLA: CLIENTE (MAESTRA CON AUDITORÍA)
--- Restricciones: UNIQUE (documento, email), CHECK (mayor de edad)
+-- Restricciones: UNIQUE (documento, correo), CHECK (mayor de edad)
 -- =====================================================
 CREATE TABLE cliente (
     id_cliente INT IDENTITY(1,1) NOT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE cliente (
     -- Restricciones
     CONSTRAINT cliente_pk PRIMARY KEY (id_cliente),
     CONSTRAINT cliente_documento_unico UNIQUE (numero_documento),
-    CONSTRAINT cliente_email_unico UNIQUE (email),
+    CONSTRAINT cliente_email_unico UNIQUE (correo),
     CONSTRAINT cliente_tipo_documento_check CHECK (tipo_documento IN ('DNI', 'CE', 'RUC', 'PAS')),
     CONSTRAINT cliente_mayor_edad CHECK (DATEADD(YEAR, 18, fecha_nacimiento) <= GETDATE()),
     CONSTRAINT cliente_telefono_check CHECK (telefono LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]%')
@@ -154,9 +154,6 @@ estado VARCHAR(10) NOT NULL DEFAULT 'activo',
 CONSTRAINT inventario_pk PRIMARY KEY (id_inventario),
 CONSTRAINT inventario_stock_check CHECK (stock_actual >= 0 AND stock_minimo >= 0),
 CONSTRAINT inventario_stock_suficiente CHECK (stock_actual >= stock_minimo),
-
-CONSTRAINT inventario_producto_fk FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
-CONSTRAINT inventario_almacen_fk FOREIGN KEY (id_almacen) REFERENCES almacen(id_almacen)
 );
 GO
 
@@ -316,7 +313,7 @@ INSERT INTO producto (nombre, descripcion, codigo_barras_sku, unidad_medida, pre
 GO
 
 -- 4. CLIENTE (15 registros)
-INSERT INTO cliente (tipo_documento, numero_documento, nombre, apellido, email, telefono, fecha_nacimiento, ubigeo_id) VALUES
+INSERT INTO cliente (tipo_documento, numero_documento, nombre, apellido, correo, telefono, fecha_nacimiento, ubigeo_id) VALUES
 ('DNI', '72145678', 'Sebastian', 'Alvarez', 'sebastian@mail.com', '987654321', '1990-05-15', '150101'),
 ('DNI', '45678912', 'Angel', 'Perez', 'angel.p@mail.com', '999888777', '1985-08-20', '150102'),
 ('CE', '00123456', 'Valeriano', 'Gomez', 'valeriano@mail.com', '912345678', '1982-12-10', '150103'),
@@ -429,60 +426,104 @@ INSERT INTO detalle_venta (cantidad, precio_unitario, subtotal, descuento, id_ve
 (1.00, 95.00, 95.00, 0.00, 15, 10);
 GO
 
+-- =====================================================
+-- CORRECCIÓN DE TABLAS PROMOCIONES
+-- =====================================================
+
+-- Eliminar tablas si existen (para reinserción limpia)
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'promocion_producto')
+    DROP TABLE promocion_producto;
+GO
+
+IF EXISTS (SELECT * FROM sys.tables WHERE name = 'promocion')
+    DROP TABLE promocion;
+GO
+
+-- =====================================================
+-- TABLA: PROMOCION (CABECERA) - VERSIÓN CORREGIDA
+-- =====================================================
+CREATE TABLE promocion (
+    id_promocion INT IDENTITY(1,1) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(255) NULL,
+    fecha_inicio DATETIME NOT NULL,
+    fecha_fin DATETIME NOT NULL,
+    tipo_promocion CHAR(1) NOT NULL,
+    valor_descuento DECIMAL(10,2) NOT NULL,
+    estado BIT NOT NULL DEFAULT 1,
+    fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
+    
+    -- Restricciones
+    CONSTRAINT promocion_pk PRIMARY KEY (id_promocion),
+    CONSTRAINT promocion_nombre_unico UNIQUE (nombre),
+    CONSTRAINT promocion_fechas_check CHECK (fecha_fin > fecha_inicio),
+    CONSTRAINT promocion_tipo_check CHECK (tipo_promocion IN ('P', 'L', 'F')),
+    CONSTRAINT promocion_valor_check CHECK (
+        (tipo_promocion = 'P' AND valor_descuento BETWEEN 0 AND 100) OR
+        (tipo_promocion = 'L' AND valor_descuento >= 2) OR
+        (tipo_promocion = 'F' AND valor_descuento = 0)
+    )
+);
+GO
+
+-- =====================================================
+-- TABLA: PROMOCION_PRODUCTO (RELACIÓN)
+-- =====================================================
+CREATE TABLE promocion_producto (
+    id_promocion_producto INT IDENTITY(1,1) NOT NULL,
+    id_promocion INT NOT NULL,
+    id_producto INT NOT NULL,
+    aplica_descuento_adicional BIT NOT NULL DEFAULT 0,
+    fecha_asignacion DATETIME NOT NULL DEFAULT GETDATE(),
+    
+    -- Restricciones
+    CONSTRAINT promocion_producto_pk PRIMARY KEY (id_promocion_producto),
+    CONSTRAINT promocion_producto_unico UNIQUE (id_promocion, id_producto),
+    
+    -- Llaves foráneas
+    CONSTRAINT promocion_producto_promocion_fk 
+        FOREIGN KEY (id_promocion) REFERENCES promocion (id_promocion),
+    CONSTRAINT promocion_producto_producto_fk 
+        FOREIGN KEY (id_producto) REFERENCES producto (id_producto)
+);
+GO
 
 
+-- 1. PROMOCIONES (8 promociones con fechas futuras)
+INSERT INTO promocion (nombre, descripcion, fecha_inicio, fecha_fin, tipo_promocion, valor_descuento, estado) VALUES
+('Descuento Vinos Tintos', '15% descuento en todos los vinos tintos', '2026-06-01 00:00:00', '2026-06-30 23:59:59', 'P', 15.00, 1),
+('2x1 en Piscos', 'Lleva 2 piscos y paga 1', '2026-05-01 00:00:00', '2026-05-31 23:59:59', 'L', 2.00, 1),
+('Promoción Fiestas Patrias', '10% descuento en toda la tienda', '2026-07-20 00:00:00', '2026-07-29 23:59:59', 'P', 10.00, 1),
+('3x2 en Cremas de Pisco', 'Lleva 3 cremas y paga 2', '2026-08-01 00:00:00', '2026-08-31 23:59:59', 'L', 3.00, 1),
+('Envío gratis por compra', 'Envío gratis en compras mayores a S/150', '2026-06-01 00:00:00', '2026-12-31 23:59:59', 'F', 0.00, 1),
+('Descuento Espumantes', '20% descuento en vinos espumantes', '2026-12-01 00:00:00', '2026-12-31 23:59:59', 'P', 20.00, 1),
+('Oferta Packs Promocionales', '5% descuento en packs', '2026-05-15 00:00:00', '2026-06-15 23:59:59', 'P', 5.00, 1),
+('Promoción Día del Padre', '15% descuento en Whisky y Ron', '2026-06-10 00:00:00', '2026-06-22 23:59:59', 'P', 15.00, 1);
+GO
 
+-- 2. PROMOCION_PRODUCTO (12 relaciones)
+INSERT INTO promocion_producto (id_promocion, id_producto, aplica_descuento_adicional) VALUES
+-- Promoción 1: Vinos Tintos
+(1, 1, 0),  -- Malbec Reservado
+(1, 6, 0),  -- Cabernet Sauvignon
+(1, 13, 0), -- Vino Orgánico Malbec
 
+-- Promoción 2: 2x1 en Piscos
+(2, 2, 0),  -- Pisco Quebranta Premium
+(2, 5, 0),  -- Pisco Acholado Especial
 
+-- Promoción 4: 3x2 en Cremas de Pisco
+(4, 3, 0),  -- Crema de Pisco de Lúcuma
+(4, 14, 0), -- Crema de Pisco de Cacao
 
+-- Promoción 6: Espumantes
+(6, 7, 0),  -- Champagne Brut
 
+-- Promoción 7: Packs Promocionales
+(7, 11, 0), -- Pack Promo Vinos
 
+-- Promoción 8: Whisky y Ron
+(8, 8, 0),  -- Whisky Escocés 12 Años
+(8, 10, 0); -- Ron Añejo 8 Años
+GO
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- Eliminar todas las Foreign Keys
-DECLARE @sql NVARCHAR(MAX) = N'';
-SELECT @sql += 'ALTER TABLE ' + QUOTENAME(s.name) + '.' + QUOTENAME(t.name) +
-    ' DROP CONSTRAINT ' + QUOTENAME(f.name) + ';'
-FROM sys.foreign_keys AS f
-    INNER JOIN sys.tables AS t ON f.parent_object_id = t.object_id
-    INNER JOIN sys.schemas AS s ON t.schema_id = s.schema_id;
-
-EXEC sp_executesql @sql;
-
--- Eliminar todas las tablas
-SET @sql = N'';
-SELECT @sql += 'DROP TABLE ' + QUOTENAME(s.name) + '.' + QUOTENAME(t.name) + ';'
-FROM sys.tables AS t
-    INNER JOIN sys.schemas AS s ON t.schema_id = s.schema_id;
-
-EXEC sp_executesql @sql;
