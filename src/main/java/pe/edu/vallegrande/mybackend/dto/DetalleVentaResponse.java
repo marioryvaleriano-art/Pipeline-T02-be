@@ -3,7 +3,7 @@ package pe.edu.vallegrande.mybackend.dto;
 import lombok.Builder;
 import lombok.Data;
 import java.math.BigDecimal;
-//Response para detalle venta añadido
+//Response para detalle venta añadidos
 @Data
 @Builder
 public class DetalleVentaResponse {
