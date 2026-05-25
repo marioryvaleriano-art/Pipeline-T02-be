@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+
+  backend:
+    build:
+      context: ..
+      dockerfile: dockerfile-mariory/Dockerfile
+
+    container_name: backend-mariory
+
+    ports:
+      - "8085:8085"
+
+    environment:
+      PORT: 8085
+
+      DATABASE_URL: jdbc:sqlserver://host.docker.internal:1433;databaseName=BodegaPeiranoDBF;encrypt=false;trustServerCertificate=true
+      DATABASE_USERNAME: sa
+      DATABASE_PASSWORD: TuPasswordFuerte123!
+      DATABASE_DRIVER: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+    restart: always
