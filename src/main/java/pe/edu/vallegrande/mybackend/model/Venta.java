@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
+//Modelo de venta
 @Entity
 @Table(name = "venta")
 @Data

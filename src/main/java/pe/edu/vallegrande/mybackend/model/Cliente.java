@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.*;
 
-
+//modelo de cliente
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
