@@ -3,8 +3,8 @@
 services:
   backend:
     build: 
-      context: .. # Sube un nivel desde 'docker-compose/' para llegar a la raíz 'sebastian/'
-      dockerfile: dockerfile-sebastian/Dockerfile # Ahora busca dentro de la carpeta raíz
+      context: ..
+      dockerfile: dockerfile-sebastian/Dockerfile
     container_name: api_peirano
     ports:
       - "8085:8085"
@@ -13,7 +13,7 @@ services:
       - SERVER_PORT=8085
       - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;databaseName=BodegaPeiranoDBF;encrypt=false;trustServerCertificate=true;hibernate.jdbc.time_zone=America/Lima
       - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=YourStrong@Password
+      - SPRING_DATASOURCE_PASSWORD=BodegaPeirano!
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - bodega-network
