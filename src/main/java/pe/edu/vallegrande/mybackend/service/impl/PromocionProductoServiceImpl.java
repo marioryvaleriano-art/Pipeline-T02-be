@@ -2,7 +2,6 @@ package pe.edu.vallegrande.mybackend.service.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pe.edu.vallegrande.mybackend.model.Producto;
 import pe.edu.vallegrande.mybackend.model.Promocion;
 import pe.edu.vallegrande.mybackend.model.PromocionProducto;
+import pe.edu.vallegrande.mybackend.repository.ProductoRepository;
 import pe.edu.vallegrande.mybackend.repository.PromocionProductoRepository;
 import pe.edu.vallegrande.mybackend.repository.PromocionRepository;
 import pe.edu.vallegrande.mybackend.service.PromocionProductoService;
@@ -26,6 +27,9 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
     
     @Autowired
     private PromocionRepository promocionRepository;
+    
+    @Autowired
+    private ProductoRepository productoRepository;
 
     @Override
     public List<PromocionProducto> listarTodos() {
@@ -35,8 +39,9 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
     @Override
     public PromocionProducto guardar(PromocionProducto relacion) {
         // Validar que no exista duplicado
-        if (relacionRepository.existsByIdPromocionAndIdProducto(
-                relacion.getIdPromocion(), relacion.getIdProducto())) {
+        if (relacionRepository.existsByPromocion_IdPromocionAndProducto_IdProducto(
+                relacion.getPromocion().getIdPromocion(), 
+                relacion.getProducto().getIdProducto())) {
             throw new RuntimeException("Este producto ya está asociado a la promoción");
         }
         return relacionRepository.save(relacion);
@@ -49,19 +54,24 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
 
     @Override
     public List<PromocionProducto> listarPorPromocion(Integer idPromocion) {
-        return relacionRepository.findByIdPromocion(idPromocion);
+        return relacionRepository.findByPromocion_IdPromocion(idPromocion);
     }
 
     @Override
     public List<PromocionProducto> listarPorProducto(Integer idProducto) {
-        return relacionRepository.findByIdProducto(idProducto);
+        return relacionRepository.findByProducto_IdProducto(idProducto);
     }
 
     @Override
     public void agregarProductosAPromocion(Integer idPromocion, List<Integer> idsProductos) {
+        Promocion promocion = promocionRepository.findById(idPromocion)
+                .orElseThrow(() -> new RuntimeException("Promoción no encontrada"));
+        
         for (Integer idProducto : idsProductos) {
-            if (!relacionRepository.existsByIdPromocionAndIdProducto(idPromocion, idProducto)) {
-                PromocionProducto relacion = new PromocionProducto(idPromocion, idProducto, false);
+            if (!relacionRepository.existsByPromocion_IdPromocionAndProducto_IdProducto(idPromocion, idProducto)) {
+                Producto producto = productoRepository.findById(idProducto)
+                        .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + idProducto));
+                PromocionProducto relacion = new PromocionProducto(promocion, producto, false);
                 relacionRepository.save(relacion);
             }
         }
@@ -69,11 +79,7 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
 
     @Override
     public void quitarProductoDePromocion(Integer idPromocion, Integer idProducto) {
-        List<PromocionProducto> relaciones = relacionRepository.findByIdPromocion(idPromocion);
-        relaciones.stream()
-                .filter(r -> r.getIdProducto().equals(idProducto))
-                .findFirst()
-                .ifPresent(r -> relacionRepository.delete(r));
+        relacionRepository.deleteByPromocion_IdPromocionAndProducto_IdProducto(idPromocion, idProducto);
     }
 
     @Override
@@ -100,7 +106,7 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
             return resultado;
         }
         
-        // Tomar la primera promoción activa (podrías implementar lógica para elegir la mejor)
+        // Tomar la primera promoción activa
         Promocion promocion = promocionesActivas.get(0).getPromocion();
         BigDecimal precioFinal = precioOriginalBD;
         BigDecimal descuentoAplicado = BigDecimal.ZERO;
@@ -116,15 +122,13 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
             
         } else if ("L".equals(promocion.getTipoPromocion())) {
             // Lleva X paga Y (ej: 2x1, 3x2)
-            BigDecimal llevar = promocion.getValorDescuento(); // X
-            BigDecimal pagar = llevar.subtract(BigDecimal.ONE); // Y
+            BigDecimal llevar = promocion.getValorDescuento();
+            BigDecimal pagar = llevar.subtract(BigDecimal.ONE);
             
-            // Calcular número de paquetes completos y sobrantes
             BigDecimal[] division = cantidadBD.divideAndRemainder(llevar);
             BigDecimal paquetes = division[0];
             BigDecimal sobrantes = division[1];
             
-            // Total a pagar = (paquetes * pagar * precioUnitario) + (sobrantes * precioUnitario)
             BigDecimal totalPagar = paquetes.multiply(pagar).multiply(precioOriginalBD)
                     .add(sobrantes.multiply(precioOriginalBD))
                     .setScale(2, RoundingMode.HALF_UP);
@@ -132,13 +136,11 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
             descuentoAplicado = subtotalOriginal.subtract(totalPagar).setScale(2, RoundingMode.HALF_UP);
             subtotalFinal = totalPagar;
             
-            // Precio final por unidad (promedio)
             if (cantidad > 0) {
                 precioFinal = totalPagar.divide(cantidadBD, 2, RoundingMode.HALF_UP);
             }
             
         } else if ("F".equals(promocion.getTipoPromocion())) {
-            // Envío gratis o beneficio especial (sin cambio de precio)
             resultado.put("beneficioEspecial", "Envío gratis");
             subtotalFinal = subtotalOriginal;
         }
@@ -151,8 +153,6 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
         resultado.put("precioFinal", precioFinal);
         resultado.put("subtotalFinal", subtotalFinal);
         resultado.put("descuentoAplicado", descuentoAplicado);
-        
-        // Información adicional para depuración
         resultado.put("descripcionPromocion", promocion.getDescripcionPromocion());
         resultado.put("fechaInicio", promocion.getFechaInicio());
         resultado.put("fechaFin", promocion.getFechaFin());
@@ -163,56 +163,5 @@ public class PromocionProductoServiceImpl implements PromocionProductoService {
     @Override
     public List<PromocionProducto> obtenerPromocionesActivasPorProducto(Integer idProducto) {
         return relacionRepository.findPromocionesActivasByProducto(idProducto);
-    }
-    
-    // Método adicional útil: Obtener la mejor promoción para un producto (si hay múltiples)
-    public Promocion obtenerMejorPromocionParaProducto(Integer idProducto, BigDecimal precioOriginal) {
-        List<PromocionProducto> promocionesActivas = relacionRepository.findPromocionesActivasByProducto(idProducto);
-        
-        if (promocionesActivas.isEmpty()) {
-            return null;
-        }
-        
-        Promocion mejorPromocion = null;
-        BigDecimal mayorAhorro = BigDecimal.ZERO;
-        
-        for (PromocionProducto pp : promocionesActivas) {
-            Promocion p = pp.getPromocion();
-            BigDecimal ahorro = BigDecimal.ZERO;
-            
-            if ("P".equals(p.getTipoPromocion())) {
-                // Ahorro porcentual
-                ahorro = precioOriginal.multiply(p.getValorDescuento().divide(new BigDecimal(100), 4, RoundingMode.HALF_UP));
-            } else if ("L".equals(p.getTipoPromocion())) {
-                // Para 2x1, ahorro = precioOriginal
-                // Para 3x2, ahorro = precioOriginal (paga 2, lleva 3)
-                ahorro = precioOriginal;
-            }
-            
-            if (ahorro.compareTo(mayorAhorro) > 0) {
-                mayorAhorro = ahorro;
-                mejorPromocion = p;
-            }
-        }
-        
-        return mejorPromocion;
-    }
-    
-    // Método adicional útil: Validar si un producto tiene promoción activa
-    public boolean tienePromocionActiva(Integer idProducto) {
-        List<PromocionProducto> promociones = relacionRepository.findPromocionesActivasByProducto(idProducto);
-        return !promociones.isEmpty();
-    }
-    
-    // Método adicional útil: Obtener todas las promociones activas con sus productos
-    public Map<Promocion, List<PromocionProducto>> getPromocionesActivasAgrupadas() {
-        List<PromocionProducto> todasActivas = relacionRepository.findAllPromocionesActivas();
-        Map<Promocion, List<PromocionProducto>> mapa = new HashMap<>();
-        
-        for (PromocionProducto pp : todasActivas) {
-            mapa.computeIfAbsent(pp.getPromocion(), k -> new ArrayList<>()).add(pp);
-        }
-        
-        return mapa;
     }
 }

@@ -1,19 +1,28 @@
 package pe.edu.vallegrande.mybackend.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;  // ← Importar BigDecimal
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "promocion")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Promocion {
 
     @Id
@@ -37,13 +46,17 @@ public class Promocion {
     private String tipoPromocion;
 
     @Column(name = "valor_descuento", nullable = false, precision = 10, scale = 2)
-    private BigDecimal valorDescuento;  // ← Cambiado de Double a BigDecimal
+    private BigDecimal valorDescuento;
 
     @Column(name = "estado", nullable = false)
     private Boolean estado = true;
 
     @Column(name = "fecha_creacion", nullable = false)
     private LocalDateTime fechaCreacion;
+
+    @OneToMany(mappedBy = "promocion", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore  // 👈 IGNORAR PARA EVITAR EL BUCLE
+    private List<PromocionProducto> promocionProductos = new ArrayList<>();
 
     @Transient
     private Long diasVigencia;
@@ -56,7 +69,7 @@ public class Promocion {
 
     public Promocion(String nombre, String descripcion, LocalDateTime fechaInicio, 
                      LocalDateTime fechaFin, String tipoPromocion, 
-                     BigDecimal valorDescuento, Boolean estado) {  // ← Cambiado
+                     BigDecimal valorDescuento, Boolean estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.fechaInicio = fechaInicio;
@@ -116,11 +129,11 @@ public class Promocion {
         this.tipoPromocion = tipoPromocion;
     }
 
-    public BigDecimal getValorDescuento() {  // ← Cambiado
+    public BigDecimal getValorDescuento() {
         return valorDescuento;
     }
 
-    public void setValorDescuento(BigDecimal valorDescuento) {  // ← Cambiado
+    public void setValorDescuento(BigDecimal valorDescuento) {
         this.valorDescuento = valorDescuento;
     }
 
@@ -138,6 +151,15 @@ public class Promocion {
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    @JsonIgnore
+    public List<PromocionProducto> getPromocionProductos() {
+        return promocionProductos;
+    }
+
+    public void setPromocionProductos(List<PromocionProducto> promocionProductos) {
+        this.promocionProductos = promocionProductos;
     }
 
     public Long getDiasVigencia() {

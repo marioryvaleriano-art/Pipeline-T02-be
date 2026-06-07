@@ -17,7 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pe.edu.vallegrande.mybackend.model.Producto;
+import pe.edu.vallegrande.mybackend.model.Promocion;
 import pe.edu.vallegrande.mybackend.model.PromocionProducto;
+import pe.edu.vallegrande.mybackend.repository.ProductoRepository;
+import pe.edu.vallegrande.mybackend.repository.PromocionRepository;
 import pe.edu.vallegrande.mybackend.service.PromocionProductoService;
 
 @RestController
@@ -27,32 +31,33 @@ public class PromocionProductoRest {
 
     @Autowired
     private PromocionProductoService relacionService;
+    
+    @Autowired
+    private PromocionRepository promocionRepository;
+    
+    @Autowired
+    private ProductoRepository productoRepository;
 
-    // GET: Listar todas las relaciones
     @GetMapping
     public ResponseEntity<List<PromocionProducto>> listarTodos() {
         return ResponseEntity.ok(relacionService.listarTodos());
     }
 
-    // GET: Productos por promoción
     @GetMapping("/promocion/{idPromocion}")
     public ResponseEntity<List<PromocionProducto>> listarPorPromocion(@PathVariable Integer idPromocion) {
         return ResponseEntity.ok(relacionService.listarPorPromocion(idPromocion));
     }
 
-    // GET: Promociones por producto
     @GetMapping("/producto/{idProducto}")
     public ResponseEntity<List<PromocionProducto>> listarPorProducto(@PathVariable Integer idProducto) {
         return ResponseEntity.ok(relacionService.listarPorProducto(idProducto));
     }
 
-    // GET: Promociones activas para un producto (útil para ventas)
     @GetMapping("/producto/{idProducto}/activas")
     public ResponseEntity<List<PromocionProducto>> obtenerPromocionesActivas(@PathVariable Integer idProducto) {
         return ResponseEntity.ok(relacionService.obtenerPromocionesActivasPorProducto(idProducto));
     }
 
-    // GET: Calcular precio con descuento (endpoint para ventas)
     @GetMapping("/calcular-descuento")
     public ResponseEntity<Map<String, Object>> calcularDescuento(
             @RequestParam Integer idProducto,
@@ -62,12 +67,22 @@ public class PromocionProductoRest {
         return ResponseEntity.ok(resultado);
     }
 
-    // POST: Asociar producto a promoción
     @PostMapping
-    public ResponseEntity<Map<String, Object>> crear(@RequestBody PromocionProducto relacion) {
+    public ResponseEntity<Map<String, Object>> crear(@RequestBody Map<String, Object> payload) {
         Map<String, Object> response = new HashMap<>();
         try {
+            Integer idPromocion = (Integer) payload.get("idPromocion");
+            Integer idProducto = (Integer) payload.get("idProducto");
+            Boolean aplicaDescuentoAdicional = (Boolean) payload.getOrDefault("aplicaDescuentoAdicional", false);
+            
+            Promocion promocion = promocionRepository.findById(idPromocion)
+                    .orElseThrow(() -> new RuntimeException("Promoción no encontrada"));
+            Producto producto = productoRepository.findById(idProducto)
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+            
+            PromocionProducto relacion = new PromocionProducto(promocion, producto, aplicaDescuentoAdicional);
             PromocionProducto nueva = relacionService.guardar(relacion);
+            
             response.put("success", true);
             response.put("message", "Producto asociado a la promoción");
             response.put("data", nueva);
@@ -79,7 +94,6 @@ public class PromocionProductoRest {
         }
     }
 
-    // POST: Asociar múltiples productos a una promoción
     @PostMapping("/promocion/{idPromocion}/productos")
     public ResponseEntity<Map<String, Object>> agregarMultiplesProductos(
             @PathVariable Integer idPromocion,
@@ -98,7 +112,6 @@ public class PromocionProductoRest {
         }
     }
 
-    // DELETE: Eliminar relación
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> eliminar(@PathVariable Integer id) {
         Map<String, Object> response = new HashMap<>();
@@ -114,7 +127,6 @@ public class PromocionProductoRest {
         }
     }
 
-    // DELETE: Quitar producto específico de una promoción
     @DeleteMapping("/promocion/{idPromocion}/producto/{idProducto}")
     public ResponseEntity<Map<String, Object>> quitarProducto(
             @PathVariable Integer idPromocion,

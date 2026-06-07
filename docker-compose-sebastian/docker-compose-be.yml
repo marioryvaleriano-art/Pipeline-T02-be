@@ -13,7 +13,7 @@ services:
       - SERVER_PORT=8085
       - SPRING_DATASOURCE_URL=jdbc:sqlserver://database:1433;databaseName=BodegaPeiranoDBF;encrypt=false;trustServerCertificate=true;hibernate.jdbc.time_zone=America/Lima
       - SPRING_DATASOURCE_USERNAME=sa
-      - SPRING_DATASOURCE_PASSWORD=BodegaPeirano!
+      - SPRING_DATASOURCE_PASSWORD=YourStrong@Password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - bodega-network

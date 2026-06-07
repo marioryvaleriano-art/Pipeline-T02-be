@@ -1,14 +1,20 @@
 package pe.edu.vallegrande.mybackend.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -20,7 +26,7 @@ import lombok.Data;
 public class Producto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // <--- ESTO SOLUCIONA EL ERROR
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
     private Integer idProducto;
 
@@ -60,6 +66,13 @@ public class Producto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "fecha_restauracion")
     private LocalDateTime fechaRestauracion;
+
+    // =====================================================
+    // RELACIÓN CON PROMOCION_PRODUCTO (NUEVO)
+    // =====================================================
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<PromocionProducto> promocionProductos = new ArrayList<>();
 
     // Esto asegura que la fecha de creación se ponga sola al guardar
     @PrePersist

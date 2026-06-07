@@ -1,5 +1,6 @@
 package pe.edu.vallegrande.mybackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,11 +13,15 @@ public class PromocionProducto {
     @Column(name = "id_promocion_producto")
     private Integer idPromocionProducto;
 
-    @Column(name = "id_promocion", nullable = false)
-    private Integer idPromocion;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_promocion", nullable = false)
+    @JsonIgnore  // 👈 IGNORAR PARA EVITAR BUCLE
+    private Promocion promocion;
 
-    @Column(name = "id_producto", nullable = false)
-    private Integer idProducto;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_producto", nullable = false)
+    @JsonIgnore  // 👈 IGNORAR PARA EVITAR BUCLE
+    private Producto producto;
 
     @Column(name = "aplica_descuento_adicional", nullable = false)
     private Boolean aplicaDescuentoAdicional = false;
@@ -24,19 +29,21 @@ public class PromocionProducto {
     @Column(name = "fecha_asignacion", nullable = false)
     private LocalDateTime fechaAsignacion;
 
-    // Relaciones (opcional para consultas)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_promocion", insertable = false, updatable = false)
-    private Promocion promocion;
+    // Campos adicionales para serialización (sin causar bucle)
+    @Transient
+    private Integer idPromocion;
+    
+    @Transient
+    private Integer idProducto;
 
     // Constructores
     public PromocionProducto() {
         this.fechaAsignacion = LocalDateTime.now();
     }
 
-    public PromocionProducto(Integer idPromocion, Integer idProducto, Boolean aplicaDescuentoAdicional) {
-        this.idPromocion = idPromocion;
-        this.idProducto = idProducto;
+    public PromocionProducto(Promocion promocion, Producto producto, Boolean aplicaDescuentoAdicional) {
+        this.promocion = promocion;
+        this.producto = producto;
         this.aplicaDescuentoAdicional = aplicaDescuentoAdicional;
         this.fechaAsignacion = LocalDateTime.now();
     }
@@ -50,20 +57,31 @@ public class PromocionProducto {
         this.idPromocionProducto = idPromocionProducto;
     }
 
-    public Integer getIdPromocion() {
-        return idPromocion;
+    @JsonIgnore
+    public Promocion getPromocion() {
+        return promocion;
     }
 
-    public void setIdPromocion(Integer idPromocion) {
-        this.idPromocion = idPromocion;
+    public void setPromocion(Promocion promocion) {
+        this.promocion = promocion;
+    }
+
+    @JsonIgnore
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    // Métodos para serializar solo los IDs (sin causar bucle)
+    public Integer getIdPromocion() {
+        return promocion != null ? promocion.getIdPromocion() : null;
     }
 
     public Integer getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(Integer idProducto) {
-        this.idProducto = idProducto;
+        return producto != null ? producto.getIdProducto() : null;
     }
 
     public Boolean getAplicaDescuentoAdicional() {
@@ -80,13 +98,5 @@ public class PromocionProducto {
 
     public void setFechaAsignacion(LocalDateTime fechaAsignacion) {
         this.fechaAsignacion = fechaAsignacion;
-    }
-
-    public Promocion getPromocion() {
-        return promocion;
-    }
-
-    public void setPromocion(Promocion promocion) {
-        this.promocion = promocion;
     }
 }

@@ -1,5 +1,5 @@
-#docker-compose -f docker-compose/docker-compose-db.yml up -d
-#docker-compose -f docker-compose/docker-compose-db.yml down
+#docker-compose -f docker-compose-sebastian/docker-compose-db.yml up -d
+#docker-compose -f docker-compose-sebastian/docker-compose-db.yml down
 services:
   database:
     # Usamos la imagen oficial que ya tienes en tu laptop
