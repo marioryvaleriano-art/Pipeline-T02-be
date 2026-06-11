@@ -103,10 +103,6 @@ GO
 -- TABLA: ALMACEN (MAESTRA CON AUDITORÍA)
 -- Restricciones: UNIQUE (código_almacen), CHECK (cantidad_botellas >= 0)
 -- =====================================================
--- =====================================================
--- TABLA: ALMACEN (MAESTRA CON AUDITORÍA)
--- Restricciones: UNIQUE (código_almacen), CHECK (cantidad_botellas >= 0)
--- =====================================================
 CREATE TABLE almacen (
 id_almacen INT IDENTITY(1,1) NOT NULL,
 nombre VARCHAR(100) NOT NULL,
