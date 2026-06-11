@@ -11,10 +11,10 @@ import java.util.List;
 public interface AlmacenRepository extends JpaRepository<Almacen, Integer> {
 
 
-    // 🔍 Filtra por estado (Trae los "Activos" o "Inactivos")
+    // Filtra por estado (Trae los "Activos" o "Inactivos")
     List<Almacen> findByEstado(String estado);
 
 
-    // 📊 Adicional: Los trae filtrados por estado y ordenados alfabéticamente de la A a la Z
+    // Adicional: Los trae filtrados por estado y ordenados alfabéticamente de la A a la Z
     List<Almacen> findByEstadoOrderByNombreAsc(String estado);
 }
