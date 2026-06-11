@@ -51,7 +51,7 @@ public class AlmacenRest {
     }
 
 
-    // ELIMINAR LÓGICO
+    // ELIMINADO LÓGICO
     @PatchMapping("/{id}/eliminar")
     public Almacen eliminar(@PathVariable Integer id) {
         return almacenService.eliminar(id);
