@@ -3,7 +3,7 @@ FROM mariory/maven:3.9-amazoncorretto-25-alpine AS build
 
 WORKDIR /app
 
-COPY . .
+COPY src ./src
 
 RUN mvn clean package -DskipTests
 

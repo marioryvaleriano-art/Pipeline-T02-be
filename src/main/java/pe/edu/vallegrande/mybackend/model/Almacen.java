@@ -1,92 +1,70 @@
 package pe.edu.vallegrande.mybackend.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDateTime;
 
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @Table(name = "almacen")
 public class Almacen {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_almacen", insertable = false, updatable = false)
+    @Column(name = "id_almacen")
     private Integer idAlmacen;
 
-
-    @Column(name = "nombre", length = 100, nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-
-    @Column(name = "ubicacion", length = 150)
+    @Column(name = "ubicacion")
     private String ubicacion;
 
-
-    @Column(name = "telefono", length = 20)
+    @Column(name = "telefono")
     private String telefono;
 
-
-    @Column(name = "responsable", length = 100)
+    @Column(name = "responsable")
     private String responsable;
 
-
-    @Column(name = "codigo_almacen", length = 20, nullable = false, unique = true)
+    @Column(name = "codigo_almacen", nullable = false, unique = true)
     private String codigoAlmacen;
 
-
-    @Column(name = "tipo_producto", length = 50)
+    @Column(name = "tipo_producto")
     private String tipoProducto;
-
 
     @Column(name = "cantidad_botellas")
     private Integer cantidadBotellas;
 
-
-    @Column(name = "estado", length = 20, nullable = false)
+    @Column(name = "estado")
     private String estado;
 
-
-    @Column(name = "ubigeo_id", length = 6, nullable = false)
+    @Column(name = "ubigeo_id", nullable = false)
     private String ubigeoId;
 
-
-    // ==========================================
-    // CAMPOS DE AUDITORÍA
-    // ==========================================
-
-
-    @Column(name = "fecha_creacion", nullable = false, updatable = false)
+    @Column(name = "fecha_creacion", updatable = false)
     private LocalDateTime fechaCreacion;
-
 
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
 
-
     @Column(name = "fecha_eliminacion")
     private LocalDateTime fechaEliminacion;
-
 
     @Column(name = "fecha_restauracion")
     private LocalDateTime fechaRestauracion;
 
-
     @PrePersist
     public void prePersist() {
         this.fechaCreacion = LocalDateTime.now();
-        if (this.estado == null || this.estado.isEmpty()) {
+
+        if (this.estado == null) {
             this.estado = "Activo";
         }
     }
-
 
     @PreUpdate
     public void preUpdate() {
         this.fechaActualizacion = LocalDateTime.now();
     }
 }
-

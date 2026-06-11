@@ -3,8 +3,8 @@
 services:
   backend:
     build: 
-      context: .. # Sube un nivel desde 'docker-compose/' para llegar a la raíz 'sebastian/'
-      dockerfile: dockerfile-sebastian/Dockerfile # Ahora busca dentro de la carpeta raíz
+      context: ..
+      dockerfile: dockerfile-sebastian/Dockerfile
     container_name: api_peirano
     ports:
       - "8085:8085"

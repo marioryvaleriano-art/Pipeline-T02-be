@@ -3,6 +3,7 @@ package pe.edu.vallegrande.mybackend.dto;
 import lombok.Data;
 import java.math.BigDecimal;
 
+//Request para detelle venta añadidos
 @Data
 public class DetalleVentaRequest {
 
