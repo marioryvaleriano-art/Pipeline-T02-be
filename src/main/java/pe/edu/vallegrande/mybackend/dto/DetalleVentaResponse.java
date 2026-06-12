@@ -1,9 +1,9 @@
 package pe.edu.vallegrande.mybackend.dto;
 
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Data;
-import java.math.BigDecimal;
-//Response para detalle venta añadidos
+
 @Data
 @Builder
 public class DetalleVentaResponse {
@@ -13,5 +13,5 @@ public class DetalleVentaResponse {
     private BigDecimal cantidad;
     private BigDecimal precioUnitario;
     private BigDecimal descuento;
-    private BigDecimal subtotal; // calculado por el backend: (cantidad * precioUnitario) - descuento
+    private BigDecimal subtotal;
 }
