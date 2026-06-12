@@ -1,13 +1,17 @@
 package pe.edu.vallegrande.mybackend.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.*;
-
-//modelo de cliente
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -17,8 +21,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "Cliente")
 public class Cliente {
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +40,6 @@ public class Cliente {
     @Column(nullable = false, length = 50)
     private String apellido;
 
-
     @Email(message = "El correo no tiene un formato válido")
     @Column(nullable = false, unique = true, length = 150)
     private String correo;
@@ -47,14 +48,12 @@ public class Cliente {
     @Column(nullable = false, length = 15)
     private String telefono;
 
-
     @Column(name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
     @Pattern(regexp = "^[0-9]{6}$", message = "El ubigeo_id solo debe contener 6 dígitos numéricos")
     @Column(name = "ubigeo_id", length = 6)
     private String ubigeoId;
-
 
     @Column(nullable = false)
     private Boolean estado = true;
@@ -63,7 +62,6 @@ public class Cliente {
     @Column(name = "fecha_creacion")
     private LocalDateTime fechaCreacion;
 
-    // Audit fields
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @Column(name = "fecha_actualizacion")
     private LocalDateTime fechaActualizacion;
