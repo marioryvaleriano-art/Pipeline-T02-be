@@ -103,10 +103,6 @@ GO
 -- TABLA: ALMACEN (MAESTRA CON AUDITORÍA)
 -- Restricciones: UNIQUE (código_almacen), CHECK (cantidad_botellas >= 0)
 -- =====================================================
--- =====================================================
--- TABLA: ALMACEN (MAESTRA CON AUDITORÍA)
--- Restricciones: UNIQUE (código_almacen), CHECK (cantidad_botellas >= 0)
--- =====================================================
 CREATE TABLE almacen (
 id_almacen INT IDENTITY(1,1) NOT NULL,
 nombre VARCHAR(100) NOT NULL,
@@ -334,7 +330,7 @@ GO
 -- 5. ALMACEN (15 registros)
 INSERT INTO almacen (nombre, ubicacion, telefono, responsable, codigo_almacen, tipo_producto, cantidad_botellas, ubigeo_id) VALUES
 ('Bodega Principal - Asia', 'Av. Principal 123, Asia', '999111111', 'Carlos Mendoza', 'BOD-001', 'vino', 4500, '150102'),
-('Bodega Costa Azul', 'Carretera Panamericana Sur', '999222222', 'María Torres', 'BOD-002', 'pisco', 3200, '150103'),
+('Bodega Costa Azul', 'Carretera Panamericana Sur', '999222222', 'Marío Torres', 'BOD-002', 'pisco', 3200, '150103'),
 ('Bodega Norteña', 'Industrial Mz A Lt 5', '999333333', 'José Ramírez', 'BOD-003', 'vino', 6000, '150401'),
 ('Bodega Sur Andina', 'Cerro Colorado 456', '999444444', 'Lucía Vargas', 'BOD-004', 'pisco', 2800, '150201'),
 ('Bodega Premium Perú', 'Ate - Carretera Central', '999555555', 'Fernando Ruiz', 'BOD-005', 'vino', 7500, '150101'),

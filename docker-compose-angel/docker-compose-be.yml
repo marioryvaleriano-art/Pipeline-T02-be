@@ -13,19 +13,19 @@ services:
       - PORT=8085
       - TZ=America/Lima
       #para conexion a otra instancia externa reemplazar sqkserver-db por la ip publica de la otra instancia
-      - DATABASE_URL=jdbc:sqlserver://sqlserver-db:1433;databaseName=ClienteBDF;encrypt=false;trustServerCertificate=true
+      - DATABASE_URL=jdbc:sqlserver://sqlserver-db:1433;databaseName=BodegaPeiranoDBF;encrypt=false;trustServerCertificate=true
       - DATABASE_USERNAME=sa
       - DATABASE_PASSWORD=Angel12345!
       - DATABASE_DRIVER=com.microsoft.sqlserver.jdbc.SQLServerDriver
       # CORS - Modificar estos valores según el origen del frontend
       # - CORS_ALLOWED_ORIGINS=http://100.30.229.200:8083,http://localhost:4200
-      #networks:
-      #- my-network
+    networks:
+      - my-network
 
       # CONSUMIR UNA RED EXISTENTE CREADA POR OTRO COMPOSE
-  #networks:
-    #my-network:
-      #external: true   # usa la red creada por el compose de la base de datos
+networks:
+    my-network:
+      external: true   # usa la red creada por el compose de la base de datos
 
       # CREAR UNA RED EN ESTE COMPOSE PARA QUE SEA COMPARTIDA si se desea
       #networks:
