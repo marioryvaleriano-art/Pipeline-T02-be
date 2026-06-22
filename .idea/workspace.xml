@@ -5,10 +5,54 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1045525d-e79d-49b5-b820-9278ca7c83ee" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pe/edu/vallegrande/mybackend/dto/DetalleVentaRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pe/edu/vallegrande/mybackend/dto/DetalleVentaRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pe/edu/vallegrande/mybackend/dto/DetalleVentaResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pe/edu/vallegrande/mybackend/dto/DetalleVentaResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/MybackendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/MybackendApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/config/WebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/config/WebConfig.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/DetalleVentaRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/DetalleVentaRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/DetalleVentaResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/DetalleVentaResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/VentaRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/VentaRequest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/VentaResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/dto/VentaResponse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Almacen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Almacen.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/DetalleVenta.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/DetalleVenta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Inventario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Inventario.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Producto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Producto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Promocion.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Promocion.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/PromocionProducto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/PromocionProducto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Ubigeo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Ubigeo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Venta.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/model/Venta.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/AlmacenRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/AlmacenRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/ClienteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/ClienteRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/DetalleVentaRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/DetalleVentaRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/InventarioRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/InventarioRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/ProductoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/ProductoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/PromocionProductoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/PromocionProductoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/PromocionRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/PromocionRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/UbigeoRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/UbigeoRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/VentaRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/repository/VentaRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/AlmacenRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/AlmacenRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/ClienteRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/ClienteRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/InventarioRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/InventarioRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/ProductoRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/ProductoRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/PromocionProductoRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/PromocionProductoRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/PromocionRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/PromocionRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/VentaRest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/rest/VentaRest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/AlmacenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/AlmacenService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/ClienteService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/ClienteService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/InventarioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/InventarioService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/ProductoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/ProductoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/PromocionProductoService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/PromocionProductoService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/PromocionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/PromocionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/VentaService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/VentaService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/AlmacenServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/AlmacenServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/ClienteServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/ClienteServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/InventarioServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/InventarioServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/ProductoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/ProductoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/PromocionProductoServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/PromocionProductoServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/PromocionServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/PromocionServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/VentaServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/pe/edu/vallegrande/mybackend/service/impl/VentaServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,21 +78,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feature/Venta.dto",
-    "last_opened_file_path": "C:/Users/gustavo/OneDrive/Desktop/ASE251S3_T02-be",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.MybackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/gustavo/OneDrive/Desktop/Pipeline-T02-be&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="ASE251S3_T02-be" />
@@ -85,6 +138,23 @@
       <option name="presentableId" value="Default" />
       <updated>1779669712354</updated>
       <workItem from="1779669717937" duration="313000" />
+      <workItem from="1782107350007" duration="119000" />
+      <workItem from="1782107489613" duration="106000" />
+      <workItem from="1782107634647" duration="65000" />
+      <workItem from="1782107724503" duration="69000" />
+      <workItem from="1782107850638" duration="30000" />
+      <workItem from="1782107902532" duration="60000" />
+      <workItem from="1782108023419" duration="48000" />
+      <workItem from="1782108097749" duration="13000" />
+      <workItem from="1782108165166" duration="232000" />
+      <workItem from="1782108419177" duration="97000" />
+      <workItem from="1782108552483" duration="55000" />
+      <workItem from="1782108626833" duration="11000" />
+      <workItem from="1782108667648" duration="156000" />
+      <workItem from="1782108842646" duration="109000" />
+      <workItem from="1782109000351" duration="275000" />
+      <workItem from="1782109300040" duration="153000" />
+      <workItem from="1782109491238" duration="220000" />
     </task>
     <servers />
   </component>
