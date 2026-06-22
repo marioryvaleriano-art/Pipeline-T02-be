@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1045525d-e79d-49b5-b820-9278ca7c83ee" name="Changes" comment="" />
+    <list default="true" id="1045525d-e79d-49b5-b820-9278ca7c83ee" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/dockerhub-ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,7 +108,7 @@
       <workItem from="1782108842646" duration="109000" />
       <workItem from="1782109000351" duration="275000" />
       <workItem from="1782109300040" duration="153000" />
-      <workItem from="1782109491238" duration="604000" />
+      <workItem from="1782109491238" duration="1188000" />
     </task>
     <servers />
   </component>
